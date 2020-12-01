@@ -12,32 +12,26 @@ public class Ex14 {
      * If an integer was not found, -1 will be returned.
      *
      * Runtime:
-     * O(n) * (O1) = O(n)
+     * O(n) * O(1) * O(1) = O(n)
+     *
      * @return the single digit in the array
      * @param a = array of integers
      */
     public static int findSingle(int[] a) {
-        //If statement checking extreme cases, first and last index of array
-        //Runtime:
-        //O(1)
-        if(a.length == 1){
-            return a[0];
-        } else if(a[a.length - 1] != a[a.length - 2]){
-            return a[a.length -1];
-        }
-        //For loop to check the other indexes in the array
-        //Runtime:
-        //O(n)
-        for (int i = 2; i < a.length - 1; i += 2) {
-            if(a[i] != a[i + 1]){
+        //For loop to go over the array and look for the non repeating integer --> O(n)
+        for (int i = 0; i < a.length; i = i + 2) {
+            //checking first and last cases - if statement --> O(1)
+            if(i == a.length - 1){
+                return a[i];
+            }
+            //Check for the only integer in the array -- if statement -->O(1)
+            if(a[i] != a[i +1]){
                 return a[i];
             }
         }
-        //Return -1 if no match was found
+        //If all integer are repeating return -1
         return -1;
     }
-
-
     /**
      * A Function that will return the index of the sub array which its sum is bigger then param x
      * If the array is empty or there is no sub array which its sum is bigger then param x -1 will be returned
@@ -53,7 +47,7 @@ public class Ex14 {
         //Declaring sum variable - O(1)
         int sum = 0;
 
-        //For loop calculating count on the arr.length --> O(n)
+        //For loop calculating sum on the arr.length --> O(n)
         for (int i = 0; i < arr.length; i++) {
             sum += arr[i];
             //If condition --> O(1)
@@ -82,7 +76,7 @@ public class Ex14 {
         int[] array1 = new int[]{6, 6, 18, 18, -4, -4, 12, 9, 9};
         int[] array2 = new int[]{8,8,-7,-7,3,3,0,0,10,10,5,5,4};
         int[] array3 = new int[]{4,4,6,6,1,8,8};
-        int[] array4 = new int[]{1,1,3,4,4};
+        int[] array4 = new int[]{1,1,3,4};
         int[] array5 = new int[]{7,7,8,8,0,0};
         int[] array6 = new int[]{5};
 
@@ -94,7 +88,7 @@ public class Ex14 {
 
 
 
-        System.out.println(smallestSubSum(array10, 20));
+        System.out.println(findSingle(array1));
 
 
 
