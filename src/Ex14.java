@@ -12,27 +12,53 @@ public class Ex14 {
      * If an integer was not found, -1 will be returned.
      *
      * Runtime Complexity:
-     * O(n / 2) * O(1) * O(1) = O(n / 2)
+     * O(1) * O(log n) = O(log n);
      *
      * Space Complexity:
      * O(1)
      *
-     * @param a = array of integers
+     * @param a ---> array of integers
      * @return the single digit in the array
      */
     public static int findSingle(int[] a) {
-        //For loop to go over the array and look for the non repeating integer --> O(n /2)
-        for (int i = 0; i < a.length; i = i + 2) {
-            //checking first and last cases - if statement --> O(1)
-            if (i == a.length - 1) {
-                return a[i];
-            }
-            //Check for the only integer in the array -- if statement -->O(1)
-            if (a[i] != a[i + 1]) {
-                return a[i];
+        ///Checking cases of single int being first, last, or the only int in the array
+
+        ///If condition ---> O(1)
+        if(a.length == 1){
+            return a[0];
+        } else if(a[0] != a[1]){
+            return a[0];
+        } else if(a[a.length - 1] != a[a.length - 2]){
+            return a[a.length - 1];
+        }
+
+        ///Declaring variables for binary search
+        int low = 0, mid, high = a.length - 1;
+
+        ///initiates binary search based on location on if mid is odd or even
+        ///Binary search time complexity ---> O(log n)
+        while(low <= high){
+            mid = (low + high) / 2;
+
+            if(mid % 2 == 0){
+                if(a[mid] == a[mid - 1]){
+                    high = mid - 2;
+                } else if(a[mid] != a[mid + 1]){
+                    return a[mid];
+                } else {
+                    low = mid + 2;
+                }
+            } else {
+                if(a[mid] == a[mid - 1]){
+                    low = mid + 1;
+                } else if (a[mid] != a[mid + 1]){
+                    return a[mid];
+                } else {
+                    high = mid - 1;
+                }
             }
         }
-        //If all integer are repeating return -1
+        ///Return -1 if no match was found :)
         return -1;
     }
 
@@ -59,7 +85,7 @@ public class Ex14 {
         for (int i = 0; i < arr.length; i++) {
             sum += arr[i];
             //If condition --> O(1)
-            if (sum >= x) {
+            if (sum > x) {
                 return i;
             }
         }
@@ -99,11 +125,11 @@ public class Ex14 {
         }
 
         ///If statement checking if each digit in the equation, increment it if needed. ---> O(1)
-        if (x3 < 10 && x1 + x2 + x3 < num) {
+        if ((x3 < 10) && (x1 + x2 + x3 < num)) {
             return validSolutions + solutions(num, x1, x2, ++x3);
-        } else if (x2 < 10 && x1 + x2 < num) {
+        } else if ((x2 < 10) && (x1 + x2 < num)) {
             return validSolutions + solutions(num, x1, ++x2, 1);
-        } else if (x1 < 10 && x1 < num) {
+        } else if ((x1 < 10) && (x1 < num)) {
             return  validSolutions + solutions(num, ++x1, 1, 1);
         } else {
 
@@ -114,7 +140,7 @@ public class Ex14 {
     /**
      *
      * @param matt
-     * @return
+     * @return 0
      */
     public static int cntTrueReg(boolean[][] matt){
         return 0;
@@ -131,6 +157,7 @@ public class Ex14 {
         int[] array4 = new int[]{1, 1, 3, 4};
         int[] array5 = new int[]{7, 7, 8, 8, 0, 0};
         int[] array6 = new int[]{5};
+        int[] arr1 = new int[]{7, 7, 3,4, 4, 0,0,8,8};
 
 
         int[] array7 = new int[]{1, 4, 45, 6, 0, 19};
@@ -139,7 +166,7 @@ public class Ex14 {
         int[] array10 = new int[3];
 
 
-        System.out.println(solutions(14));
+        System.out.println();
 
 
     }
