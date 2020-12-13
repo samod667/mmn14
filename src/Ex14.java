@@ -63,8 +63,8 @@ public class Ex14 {
     }
 
     /**
-     * A Function that will return the index of the sub array which its sum is bigger then param x
-     * If the array is empty or there is no sub array which its sum is bigger then param x -1 will be returned
+     * A Function that will return the smallest subarray with the sum that is greater then x
+     * If there is no sub array which its sum is bigger then param x -1 will be returned
      *
      * Runtime Complexity:
      * O(1) * O(n) = O(n)
@@ -78,18 +78,38 @@ public class Ex14 {
      * @return The index of the sub array. -1 if array is empty, or sub array was not found
      */
     public static int smallestSubSum(int[] arr, int x) {
-        //Declaring sum variable - O(1)
-        int sum = 0;
+        ///Initializing variables
+        ///Space Complexity ---> O(1)
+        int start = 0,  end = 0,  sum = 0,  min_length = arr.length, length = arr.length;
 
-        //For loop calculating sum on the arr.length --> O(n)
-        for (int i = 0; i < arr.length; i++) {
-            sum += arr[i];
-            //If condition --> O(1)
-            if (sum > x) {
-                return i;
+        ///Initialize while loop
+        ///Time Complexity ---> O(n)
+        while (end < length){
+            ///Add to sum if sum is smaller then x, increment end
+            while(sum <= x && end < length){
+                sum += arr[end];
+                end++;
+            }
+            ///If sum is greater the x, change min_value, subtract from sun and increment start variable
+            while(sum > x && start < length){
+               if(Math.abs(end - start) < min_length){
+                   min_length = Math.abs(end - start);
+                   sum -= arr[start];
+                   start++;
+               } else {
+                   sum -= arr[start];
+                   start++;
+               }
             }
         }
-        return -1;
+        ///Return -1 if no array was found
+        ///If statement time complexity ---> O(1)
+        if(start == 0 && min_length == length){
+            return -1;
+        } else {
+            ///Return the min_length == the smallest sub array greater then x
+            return min_length;
+        }
     }
 
     /**
@@ -125,14 +145,13 @@ public class Ex14 {
         }
 
         ///If statement checking if each digit in the equation, increment it if needed. ---> O(1)
-        if ((x3 < 10) && (x1 + x2 + x3 < num)) {
+        if (x3 < 10 && x1 + x2 + x3 < num) {
             return validSolutions + solutions(num, x1, x2, ++x3);
-        } else if ((x2 < 10) && (x1 + x2 < num)) {
+        } else if (x2 < 10 && x1 + x2 < num) {
             return validSolutions + solutions(num, x1, ++x2, 1);
-        } else if ((x1 < 10) && (x1 < num)) {
+        } else if (x1 < 10 && x1 < num) {
             return  validSolutions + solutions(num, ++x1, 1, 1);
         } else {
-
             return validSolutions;
         }
     }
@@ -163,10 +182,10 @@ public class Ex14 {
         int[] array7 = new int[]{1, 4, 45, 6, 0, 19};
         int[] array8 = new int[]{1, 10, 5, 2, 7};
         int[] array9 = new int[]{1, 11, 100, 1, 0, 200, 3, 2, 1, 250};
-        int[] array10 = new int[3];
+        int[] array10 = new int[]{3};
 
 
-        System.out.println();
+        System.out.println(smallestSubSum(array10, 2));
 
 
     }
