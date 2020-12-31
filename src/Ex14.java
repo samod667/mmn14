@@ -159,14 +159,15 @@ public class Ex14 {
     }
 
     /**
-     *
-     * @param matt
-     * @return 0
+     * A function that will receive a squared matrix and will return the number of available true regions
+     * @param matt = The squared matrix
+     * @return int - number of true regions available
      */
     public static int cntTrueReg(boolean[][] matt){
         return cntTrueReg(matt, 0, 0);
     }
 
+    ///HELPER METHOD
     private static int cntTrueReg(boolean[][] matt, int i, int j){
         if(i == matt.length){
             return 0;
@@ -184,25 +185,26 @@ public class Ex14 {
         }
     }
 
-    private static void resetArea2(boolean[][] matt, int i, int j){
-        matt[i][j] = false;
+//    private static void resetArea2(boolean[][] matt, int i, int j){
+//        matt[i][j] = false;
+//
+//        if(j < matt.length - 1 && matt[i][j + 1]){
+//            resetArea(matt, i, ++j);
+//        }
+//        if(j > 1 && matt[i][j - 1]){
+//            resetArea(matt, i, --j);
+//        }
+//
+//        if(i > 1 && matt[i - 1][j]){
+//            resetArea(matt, --i, j);
+//        }
+//
+//        if(i < matt.length - 1 && matt[i + 1][j]){
+//            resetArea(matt, ++i, j);
+//        }
+//    }
 
-        if(j < matt.length - 1 && matt[i][j + 1]){
-            resetArea(matt, i, ++j);
-        }
-        if(j > 1 && matt[i][j - 1]){
-            resetArea(matt, i, --j);
-        }
-
-        if(i > 1 && matt[i - 1][j]){
-            resetArea(matt, --i, j);
-        }
-
-        if(i < matt.length - 1 && matt[i + 1][j]){
-            resetArea(matt, ++i, j);
-        }
-    }
-
+    ///HELPER METHOD THAT WILL FIND THE AREA OF THE REGION
     private static void resetArea(boolean[][] matt, int i, int j) {
         if (i < 0 || j < 0 || i == matt.length || j == matt.length) {
             return;
@@ -216,10 +218,10 @@ public class Ex14 {
             matt[i][j] = false;
         }
 
-        resetArea(matt, i, --j);
-        resetArea(matt, --i, j);
-        resetArea(matt, i, ++j);
-        resetArea(matt, ++i, j);
+        resetArea(matt, i, j - 1);
+        resetArea(matt, i - 1, j);
+        resetArea(matt, i, j +1);
+        resetArea(matt, i + 1, j);
 
     }
 
