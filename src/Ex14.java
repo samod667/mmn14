@@ -135,24 +135,26 @@ public class Ex14 {
     ///HELPER METHOD FOR SOLUTION///
     private static int solutions(int num, int x1, int x2, int x3) {
         ///Declaring number of valid solutions variable --> O(1)
-        int validSolutions = 0;
+
+        boolean isSolved = x1 + x2 + x3 == num;
 
         ///If statement to check if equation is a match -- if it is increment validSolutions variable. --> O(1)
-        if (x1 + x2 + x3 == num) {
+        if (isSolved) {
             ///Print solution to the console
-            System.out.println(x1 + " + " + x2 + " + " + x3 + " = " + num);
-            validSolutions = 1;
+            System.out.println(x1 + " + " + x2 + " + " + x3);
         }
 
         ///If statement checking if each digit in the equation, increment it if needed. ---> O(1)
+        int solutionsAdded = isSolved ? 1 : 0;
+
         if (x3 < 10 && x1 + x2 + x3 < num) {
-            return validSolutions + solutions(num, x1, x2, ++x3);
+            return solutionsAdded + solutions(num, x1, x2, ++x3);
         } else if (x2 < 10 && x1 + x2 < num) {
-            return validSolutions + solutions(num, x1, ++x2, 1);
+            return solutionsAdded + solutions(num, x1, ++x2, 1);
         } else if (x1 < 10 && x1 < num) {
-            return  validSolutions + solutions(num, ++x1, 1, 1);
+            return solutionsAdded + solutions(num, ++x1, 1, 1);
         } else {
-            return validSolutions;
+            return solutionsAdded;
         }
     }
 
@@ -162,7 +164,63 @@ public class Ex14 {
      * @return 0
      */
     public static int cntTrueReg(boolean[][] matt){
-        return 0;
+        return cntTrueReg(matt, 0, 0);
+    }
+
+    private static int cntTrueReg(boolean[][] matt, int i, int j){
+        if(i == matt.length){
+            return 0;
+        }
+
+        if(j == matt.length){
+            return cntTrueReg(matt, ++i, 0);
+        }
+
+        if(!matt[i][j]){
+            return cntTrueReg(matt, i, ++j);
+        } else {
+            resetArea(matt, i, j);
+            return 1 + cntTrueReg(matt, i, ++j);
+        }
+    }
+
+    private static void resetArea2(boolean[][] matt, int i, int j){
+        matt[i][j] = false;
+
+        if(j < matt.length - 1 && matt[i][j + 1]){
+            resetArea(matt, i, ++j);
+        }
+        if(j > 1 && matt[i][j - 1]){
+            resetArea(matt, i, --j);
+        }
+
+        if(i > 1 && matt[i - 1][j]){
+            resetArea(matt, --i, j);
+        }
+
+        if(i < matt.length - 1 && matt[i + 1][j]){
+            resetArea(matt, ++i, j);
+        }
+    }
+
+    private static void resetArea(boolean[][] matt, int i, int j) {
+        if (i < 0 || j < 0 || i == matt.length || j == matt.length) {
+            return;
+        }
+
+        if (!matt[i][j]) {
+            return;
+        }
+
+        if (matt[i][j]) {
+            matt[i][j] = false;
+        }
+
+        resetArea(matt, i, --j);
+        resetArea(matt, --i, j);
+        resetArea(matt, i, ++j);
+        resetArea(matt, ++i, j);
+
     }
 
     /**
@@ -182,11 +240,15 @@ public class Ex14 {
         int[] array7 = new int[]{1, 4, 45, 6, 0, 19};
         int[] array8 = new int[]{1, 10, 5, 2, 7};
         int[] array9 = new int[]{1, 11, 100, 1, 0, 200, 3, 2, 1, 250};
-        int[] array10 = new int[]{3};
+        int[] array10 = {3};
+
+        boolean[][] matt = {{false,false,false,false,true}, {false, true,true,true,false},{false,false,true,true,false}, {true,false,false,false,false}, {true,true,false,false,false}};
+
+        boolean[][] matt2 = {{true, false, true, true}, {true, false, false, false}, {true, false, true, true}, {true, false, false, false}};
 
 
-        System.out.println(smallestSubSum(array10, 2));
-
+        System.out.println(cntTrueReg(matt));
+        System.out.println(cntTrueReg(matt2));
 
     }
 }
