@@ -3,17 +3,17 @@
  *
  * @author Dor Samoha
  * ID: 312503287
- * @version Nov 22nd, 2020
+ * @version Dec 20th, 2020
  */
 
 public class Ex14 {
     /**
      * A function that returns the integer that appears only once in the array.
      * If an integer was not found, -1 will be returned.
-     *
+     * <p>
      * Runtime Complexity:
      * O(1) * O(log n) = O(log n);
-     *
+     * <p>
      * Space Complexity:
      * O(1)
      *
@@ -65,10 +65,10 @@ public class Ex14 {
     /**
      * A Function that will return the smallest subarray with the sum that is greater then x
      * If there is no sub array which its sum is bigger then param x -1 will be returned
-     *
+     * <p>
      * Runtime Complexity:
      * O(1) * O(n) = O(n)
-     *
+     * <p>
      * Space Complexity:
      * O(1)
      *
@@ -160,41 +160,48 @@ public class Ex14 {
      * @return int - number of true regions available
      */
     public static int cntTrueReg(boolean[][] matt) {
+        ///Calling helper method 2
         return cntTrueReg(matt, 0, 0);
     }
 
-    ///HELPER METHOD
+    ///Helper method 2 which will run through the matrix and will behave according the boolean value that is stored in the current index
     private static int cntTrueReg(boolean[][] matt, int i, int j) {
+        ///Break point 1
         if (i == matt.length) {
             return 0;
         }
-
+        ///Break point 2
         if (j == matt.length) {
             return cntTrueReg(matt, ++i, 0);
         }
-
+        ///Break point 3
         if (!matt[i][j]) {
             return cntTrueReg(matt, i, ++j);
         } else {
+            ///If index value is true ---> scan true area ---> calling helper method 2
             resetArea(matt, i, j);
+            ///Increment true zones value in the squared matrix
             return 1 + cntTrueReg(matt, i, ++j);
         }
     }
 
-    ///HELPER METHOD THAT WILL FIND THE AREA OF THE REGION
+    ///Helper method 3 that will scan the true zone in a squared matrix and will convert true values to false
     private static void resetArea(boolean[][] matt, int i, int j) {
+        ///Break point 1
         if (i < 0 || j < 0 || i == matt.length || j == matt.length) {
             return;
         }
-
+        ///Break point 2
         if (!matt[i][j]) {
             return;
         }
 
+        ///Turn value to false
         if (matt[i][j]) {
             matt[i][j] = false;
         }
 
+        ///Recursive call to scan the entire zone
         resetArea(matt, i, j - 1);
         resetArea(matt, i - 1, j);
         resetArea(matt, i, j + 1);
