@@ -10,11 +10,15 @@ public class Ex14 {
     /**
      * A function that returns the integer that appears only once in the array.
      * If an integer was not found, -1 will be returned.
-     * <p>
+     *
      * Runtime Complexity:
-     * O(1) * O(log n) = O(log n);
-     * <p>
+     * For every iteration of the loop the array will be cut in half, until array has one element and loop ends
+     * logarithmic complexity. n = array length = O(log n).
+     *
+     * O(1) + O(log n) = O(log n);
+     *
      * Space Complexity:
+     * The function declaring 3 variables which are not depended on any loop -> Constant complexity
      * O(1)
      *
      * @param a ---> array of integers
@@ -67,9 +71,12 @@ public class Ex14 {
      * If there is no sub array which its sum is bigger then param x -1 will be returned
      * <p>
      * Runtime Complexity:
-     * O(1) * O(n) = O(n)
+     * We loop through the array one time only and we adjust the smallestSubSum according to the given values.
+     * Because our algorithm loop will not exceed n length of the array & there are no nested loops - we can determine that our runtime complexity is O(n)
+     * O(1) + O(n) = O(n)
      * <p>
      * Space Complexity:
+     * Out variable declaration is not dependant on any loop and we do not declare any variable inside a loop - O(1)
      * O(1)
      *
      * @param arr = array of integer
